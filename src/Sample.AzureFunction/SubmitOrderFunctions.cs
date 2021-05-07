@@ -1,8 +1,6 @@
-using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.WebJobs.ServiceBusIntegration;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.WebJobs;
+using MassTransit.Transports;
+using Microsoft.Azure.Functions.Worker;
 using Sample.AzureFunction.Consumers;
 
 namespace Sample.AzureFunction
@@ -10,18 +8,19 @@ namespace Sample.AzureFunction
     public class SubmitOrderFunctions
     {
         const string SubmitOrderQueueName = "submit-order";
-        readonly IMessageReceiver _receiver;
+        readonly IReceiveEndpointDispatcher<SubmitOrderConsumer> _dispatcher;
 
-        public SubmitOrderFunctions(IMessageReceiver receiver)
+        public SubmitOrderFunctions(IReceiveEndpointDispatcher<SubmitOrderConsumer> dispatcher)
         {
-            _receiver = receiver;
+            _dispatcher = dispatcher;
+            _dispatcher = dispatcher;
         }
 
-        [FunctionName("SubmitOrder")]
-        public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)]
-            Message message, CancellationToken cancellationToken)
+        [Function("SubmitOrder")]
+        public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName, Connection = "ServiceBusConnection")]
+            byte[] body, FunctionContext context)
         {
-            return _receiver.HandleConsumer<SubmitOrderConsumer>(SubmitOrderQueueName, message, cancellationToken);
+            return _dispatcher.Dispatch(context, body);
         }
     }
 }

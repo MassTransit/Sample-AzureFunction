@@ -1,27 +1,25 @@
-using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.WebJobs.EventHubsIntegration;
-using Microsoft.Azure.EventHubs;
-using Microsoft.Azure.WebJobs;
+using MassTransit.Transports;
+using Microsoft.Azure.Functions.Worker;
 using Sample.AzureFunction.Consumers;
 
 namespace Sample.AzureFunction
 {
     public class AuditOrderFunctions
     {
-        const string AuditOrderEventHubName = "audit-order";
-        readonly IEventReceiver _receiver;
+        public const string AuditOrderEventHubName = "audit-order";
+        readonly IReceiveEndpointDispatcher<AuditOrderConsumer> _dispatcher;
 
-        public AuditOrderFunctions(IEventReceiver receiver)
+        public AuditOrderFunctions(IReceiveEndpointDispatcher<AuditOrderConsumer> dispatcher)
         {
-            _receiver = receiver;
+            _dispatcher = dispatcher;
         }
 
-        [FunctionName("AuditOrder")]
-        public Task AuditOrderAsync([EventHubTrigger(AuditOrderEventHubName, Connection = "AzureWebJobsEventHub")]
-            EventData message, CancellationToken cancellationToken)
+        [Function("AuditOrder")]
+        public Task AuditOrderAsync([EventHubTrigger(AuditOrderEventHubName, Connection = "EventHubConnection", IsBatched = false)]
+            byte[] body, FunctionContext context)
         {
-            return _receiver.HandleConsumer<AuditOrderConsumer>(AuditOrderEventHubName, message, cancellationToken);
+            return _dispatcher.Dispatch(context, body);
         }
     }
 }

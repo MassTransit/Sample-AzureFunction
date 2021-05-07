@@ -9,7 +9,7 @@ namespace Sample.AzureFunction.Consumers
     {
         public async Task Consume(ConsumeContext<OrderReceived> context)
         {
-            LogContext.Debug?.Log("Received Order: {OrderNumber}", context.Message.OrderNumber);
+            LogContext.Info?.Log("Audited Order: {OrderNumber}", context.Message.OrderNumber);
         }
     }
 }
