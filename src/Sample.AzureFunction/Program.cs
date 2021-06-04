@@ -38,7 +38,7 @@ namespace Sample.AzureFunction
                             });
                         });
 
-                        x.ConfigureReceiveEndpoint((_, cfg) =>
+                        x.AddConfigureEndpointsCallback((_, cfg) =>
                         {
                             cfg.ClearMessageDeserializers();
                             cfg.UseRawJsonSerializer();

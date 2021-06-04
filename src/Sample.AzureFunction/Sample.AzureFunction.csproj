@@ -5,9 +5,9 @@
     <NoWarn>CS0618,CS1998,CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="7.2.0-develop.77" />
-    <PackageReference Include="MassTransit.AspNetCore" Version="7.2.0-develop.77" />
-    <PackageReference Include="MassTransit.EventHub" Version="7.2.0-develop.77" />
+    <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="7.2.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="MassTransit.EventHub" Version="7.2.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.2.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.ServiceBus" Version="4.2.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="4.2.1" />
