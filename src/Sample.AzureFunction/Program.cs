@@ -44,8 +44,6 @@ namespace Sample.AzureFunction
                             cfg.UseRawJsonSerializer();
                         });
                     });
-
-                    services.AddMassTransitHostedService(true);
                 });
         }
     }
