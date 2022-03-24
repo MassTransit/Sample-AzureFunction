@@ -17,7 +17,7 @@ namespace Sample.AzureFunction.Consumers
                 Timestamp = DateTime.UtcNow
             });
 
-            return context.RespondAsync<OrderAccepted>(new { context.Message.OrderNumber });
+            return context.RespondAsync<OrderAccepted>(context.Message);
         }
     }
 }

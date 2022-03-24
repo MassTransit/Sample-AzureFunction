@@ -1,3 +1,4 @@
+using System;
 using MassTransit;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +18,13 @@ namespace Sample.AzureFunction
             builder.Services
                 .AddScoped<SubmitOrderFunctions>()
                 .AddScoped<AuditOrderFunctions>()
-                .AddMassTransitForAzureFunctions(cfg => cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>(),
-                    "AzureWebJobsServiceBus",
-                    (_, cfg) => cfg.UseRawJsonSerializer())
+                .AddScoped<SubmitOrderHttpFunction>()
+                .AddMassTransitForAzureFunctions(cfg =>
+                    {
+                        cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
+                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:submit-order"));
+                    },
+                    "AzureWebJobsServiceBus")
                 .AddMassTransitEventHub();
         }
     }
