@@ -1,7 +1,4 @@
-using GreenPipes;
 using MassTransit;
-using MassTransit.ConsumeConfigurators;
-using MassTransit.Definition;
 
 namespace Sample.AzureFunction.Consumers
 {

@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.WebJobs.EventHubsIntegration;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs;
+using MassTransit;
 using Microsoft.Azure.WebJobs;
 using Sample.AzureFunction.Consumers;
 
@@ -18,8 +18,8 @@ namespace Sample.AzureFunction
         }
 
         [FunctionName("AuditOrder")]
-        public Task AuditOrderAsync([EventHubTrigger(AuditOrderEventHubName, Connection = "AzureWebJobsEventHub")]
-            EventData message, CancellationToken cancellationToken)
+        public Task AuditOrderAsync([EventHubTrigger(AuditOrderEventHubName, Connection = "AzureWebJobsEventHub")] EventData message,
+            CancellationToken cancellationToken)
         {
             return _receiver.HandleConsumer<AuditOrderConsumer>(AuditOrderEventHubName, message, cancellationToken);
         }

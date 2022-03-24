@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using MassTransit;
-using MassTransit.Context;
 
 namespace Sample.AzureFunction.Consumers
 {
@@ -18,7 +17,7 @@ namespace Sample.AzureFunction.Consumers
                 Timestamp = DateTime.UtcNow
             });
 
-            return context.RespondAsync<OrderAccepted>(new {context.Message.OrderNumber});
+            return context.RespondAsync<OrderAccepted>(new { context.Message.OrderNumber });
         }
     }
 }

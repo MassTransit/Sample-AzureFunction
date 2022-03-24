@@ -17,7 +17,9 @@ namespace Sample.AzureFunction
             builder.Services
                 .AddScoped<SubmitOrderFunctions>()
                 .AddScoped<AuditOrderFunctions>()
-                .AddMassTransitForAzureFunctions(cfg => { cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>(); })
+                .AddMassTransitForAzureFunctions(cfg => cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>(),
+                    "AzureWebJobsServiceBus",
+                    (_, cfg) => cfg.UseRawJsonSerializer())
                 .AddMassTransitEventHub();
         }
     }

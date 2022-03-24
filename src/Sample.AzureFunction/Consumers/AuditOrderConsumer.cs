@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using MassTransit;
-using MassTransit.Context;
 
 namespace Sample.AzureFunction.Consumers
 {

@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.WebJobs.ServiceBusIntegration;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
+using MassTransit;
 using Microsoft.Azure.WebJobs;
 using Sample.AzureFunction.Consumers;
 
@@ -18,8 +18,7 @@ namespace Sample.AzureFunction
         }
 
         [FunctionName("SubmitOrder")]
-        public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)]
-            Message message, CancellationToken cancellationToken)
+        public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)] ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return _receiver.HandleConsumer<SubmitOrderConsumer>(SubmitOrderQueueName, message, cancellationToken);
         }
