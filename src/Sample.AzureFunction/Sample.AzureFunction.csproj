@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <TargetFramework>net6.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
     <NoWarn>CS0618,CS1998,CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.0" />
-    <PackageReference Include="MassTransit.EventHub" Version="8.0.0" />
+    <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.3" />
+    <PackageReference Include="MassTransit.EventHub" Version="8.0.3" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.6.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.ServiceBus" Version="4.2.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.EventHubs" Version="4.3.0" />
