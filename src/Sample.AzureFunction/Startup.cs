@@ -1,5 +1,6 @@
 using System;
 using MassTransit;
+using MassTransit.ServiceBusIntegration;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.AzureFunction;
@@ -16,16 +17,17 @@ namespace Sample.AzureFunction
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services
-                .AddScoped<SubmitOrderFunctions>()
-                .AddScoped<AuditOrderFunctions>()
                 .AddScoped<SubmitOrderHttpFunction>()
-                .AddMassTransitForAzureFunctions(cfg =>
-                    {
-                        cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
-                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:submit-order"));
-                    },
-                    "AzureWebJobsServiceBus")
-                .AddMassTransitEventHub();
+                .AddMassTransit(x =>
+                {
+                    x.SetKebabCaseEndpointNameFormatter();
+                    x.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
+                    x.AddRequestClient<SubmitOrder>(new Uri("queue:submit-order"));
+
+                    x.UsingRabbitMq((context, cfg) => { cfg.ConfigureEndpoints(context); });
+                })
+                .AddSingleton<IAsyncBusHandle, AsyncBusHandle>()
+                .RemoveMassTransitHostedService();
         }
     }
 }

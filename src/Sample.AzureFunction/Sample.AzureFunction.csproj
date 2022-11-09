@@ -5,8 +5,8 @@
     <NoWarn>CS0618,CS1998,CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MassTransit.WebJobs.EventHubs" Version="8.0.1-develop.402" />
-    <PackageReference Include="MassTransit.WebJobs.ServiceBus" Version="8.0.1-develop.402" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
+    <PackageReference Include="MassTransit.WebJobs.ServiceBus" Version="8.0.8" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Script.ExtensionsMetadataGenerator" Version="4.0.1" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.0" />
