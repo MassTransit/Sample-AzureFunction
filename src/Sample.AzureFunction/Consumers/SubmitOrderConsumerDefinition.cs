@@ -8,7 +8,7 @@ namespace Sample.AzureFunction.Consumers
         protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator,
             IConsumerConfigurator<SubmitOrderConsumer> consumerConfigurator)
         {
-            endpointConfigurator.UseMessageRetry(x => x.Intervals(10, 100, 500, 1000));
+            consumerConfigurator.UseMessageRetry(x => x.Intervals(10, 100, 500, 1000));
         }
     }
 }
